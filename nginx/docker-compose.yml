@@ -1,0 +1,17 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:1.23.1
+    restart: always
+    network_mode: host
+#    ports:
+#      - ${HTTP_PORT}:80
+#      - ${HTTPS_PORT}:443
+    volumes:
+      - ./volumes/html:/usr/share/nginx/html:ro
+      - ./files/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./files/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./files/sites-enabled:/etc/nginx/sites-enabled:ro
+      - ./files/certbot:/etc/letsencrypt:ro
+      - ./files/vhost.d:/etc/nginx/vhost.d:ro
+#      - ./files/modules:/usr/lib/nginx/modules:ro
