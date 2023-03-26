@@ -1,0 +1,18 @@
+version: "3"
+
+# test with https://up.example.ir/probe?target=matrix.azadresan.ir&module=http_2xx&debug=true
+services:
+  blackbox:
+    image: prometheus/blackbox-exporter:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blackbox_exporter
+    restart: always
+    tty: true
+    volumes:
+      - ./:/config
+    ports:
+      - 9115:9115/tcp
+    command:
+      - --config.file=/config/blackbox.yml
