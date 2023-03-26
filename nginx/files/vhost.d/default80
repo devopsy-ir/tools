@@ -7,6 +7,6 @@ location /.well-known/acme-challenge/ {
         try_files $uri =404;
         break;
 }
-location / {
-        return 301 https://$host$request_uri;
-}
+#location / {
+#        return 301 https://$host$request_uri;
+#}
