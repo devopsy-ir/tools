@@ -3,6 +3,10 @@ services:
   nginx:
     image: nginx:1.23.1
     restart: always
+    extra_hosts:
+      - "example.ir:192.168.122.117"
+      - "up.example.ir:192.168.122.117"
+      - "metrics.example.ir:192.168.122.117"
     network_mode: host
 #    ports:
 #      - ${HTTP_PORT}:80

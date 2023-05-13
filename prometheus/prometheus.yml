@@ -9,7 +9,7 @@ global:
 # Alertmanager configuration
 alerting:
   alertmanagers:
-  - scheme: https
+  - scheme: http
     path_prefix: "/"  
     static_configs:
       - targets: ["alert.example.ir"]
@@ -34,7 +34,7 @@ scrape_configs:
         module: [http_2xx]
     static_configs:
       - targets:
-        - https://example.ir/
+        - http://example.ir/
         - https://github.com
     relabel_configs:
       - source_labels: [__address__]

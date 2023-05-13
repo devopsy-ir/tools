@@ -4,6 +4,10 @@ version: "3"
 services:
   blackbox:
     image: prometheus/blackbox-exporter:latest
+    extra_hosts:
+      - "example.ir:192.168.122.117"
+      - "up.example.ir:192.168.122.117"
+      - "metrics.example.ir:192.168.122.117"
     build:
       context: .
       dockerfile: Dockerfile

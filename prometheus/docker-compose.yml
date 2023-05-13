@@ -3,6 +3,10 @@ version:  "3"
 services:  
   prometheus:
     image: prom/prometheus
+    extra_hosts:
+      - "example.ir:192.168.122.117"
+      - "up.example.ir:192.168.122.117"
+      - "metrics.example.ir:192.168.122.117"
     volumes:
       - ./volumes/prometheus/data/:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
