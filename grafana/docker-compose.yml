@@ -1,0 +1,17 @@
+version:  "3"
+
+services:  
+  grafana:
+    image: grafana/grafana:9.5.2-ubuntu
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 127.0.0.1:3005:3000
+    environment:
+      - GF_AUTH_PROXY_ENABLED=true
+      - GF_SERVER_ROOT_URL=https://monitor.example.ir
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./volumes/grafana_data:/var/lib/grafana
+    restart: always
