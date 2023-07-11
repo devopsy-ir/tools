@@ -1,13 +1,13 @@
 version: "3"
 
-# test with https://up.example.ir/probe?target=matrix.azadresan.ir&module=http_2xx&debug=true
+# test with https://up.devopsyy.ir/probe?target=matrix.azadresan.ir&module=http_2xx&debug=true
 services:
   blackbox:
     image: prometheus/blackbox-exporter:latest
     extra_hosts:
-      - "example.ir:192.168.122.117"
-      - "up.example.ir:192.168.122.117"
-      - "metrics.example.ir:192.168.122.117"
+      - "devopsyy.ir:192.168.122.117"
+      - "up.devopsyy.ir:192.168.122.117"
+      - "metrics.devopsyy.ir:192.168.122.117"
     build:
       context: .
       dockerfile: Dockerfile

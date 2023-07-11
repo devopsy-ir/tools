@@ -12,7 +12,7 @@ alerting:
   - scheme: http
     path_prefix: "/"  
     static_configs:
-      - targets: ["alert.example.ir"]
+      - targets: ["alert.devopsyy.ir"]
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
@@ -34,7 +34,7 @@ scrape_configs:
         module: [http_2xx]
     static_configs:
       - targets:
-        - http://example.ir/
+        - http://devopsyy.ir/
         - https://github.com
     relabel_configs:
       - source_labels: [__address__]
@@ -42,4 +42,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: up.example.ir  # The blackbox exporter's real hostname:port.
+        replacement: up.devopsyy.ir  # The blackbox exporter's real hostname:port.
