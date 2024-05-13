@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  nexus:
+    restart: always
+#    image: sonatype/nexus3:3.67.0
+    image: sonatype/nexus3:3.68.0
+    volumes:
+      - "nexus-data:/nexus-data"
+      #- "/etc/resolv.conf:/etc/resolv.conf:ro"
+      # Make dns servers custom to Nexus instead of reading from the host!
+      - ./resolv.conf:/etc/resolv.conf:ro
+      - ./deploy:/opt/sonatype/nexus/deploy
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:8083"
+
+volumes:
+  nexus-data: {}

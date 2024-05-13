@@ -1,0 +1,49 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Copy .env
+  become: true
+  tags:
+    - copy_plan
+  template:
+    src: "env.j2"
+    dest: "{{ app_update_api_path }}/.env"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: GIT pull
+  become: true
+  tags:
+    - git_pull
+  git:
+    repo: "https://{{ gituser | urlencode }}:{{ gitpassword | urlencode }}@git.nilvaos.ir/scm/devops/infra.git"
+    dest: "/root/infra"
+    update: yes
+    clone: yes
+    version: master
+
+- name: Copy CHANGES
+  become: true
+  tags:
+    - copy_changes
+  template:
+    src: "CHANGES.rtl.md"
+    dest: "{{ app_update_api_path }}/CHANGES.rtl.md"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: docker compose build api
+  command: 'docker-compose build api'
+  args:
+    chdir: "{{ app_update_api_path }}"
+
+- name: docker compose down api
+  command: 'docker-compose down'
+  args:
+    chdir: "{{ app_update_api_path }}"
+
+- name: docker compose up api
+  command: 'docker-compose up -d'
+  args:
+    chdir: "{{ app_update_api_path }}"
