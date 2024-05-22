@@ -11,4 +11,4 @@ location ^~ /.well-known/acme-challenge/ {
     try_files $uri =404;
     break;
 }
-include /etc/letsencrypt/options-ssl-nginx.conf;
+#include /var/www/certs/old/options-ssl-nginx.conf;
