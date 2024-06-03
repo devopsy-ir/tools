@@ -1,0 +1,14 @@
+id: whatsapp
+url: https://whatsapp.bridge.hivaa.im
+as_token: uxh5bGJt20AOXgIoK0NYxr73JMkqKke6I2TfCVWqvBCEMVwMUNBQ77bJBzBJRiuE
+hs_token: wJhcuXKAAy4dzlrDZIRHVv3NiwFPOWgKI0Z6xiPAtIvYUykqmhyDZwhXmGDm9pZB
+sender_localpart: ptondhjURzdgNfsPEgbn4Al9L56dgKxH
+rate_limited: false
+namespaces:
+  users:
+  - regex: ^@whatsapp_[0-9]+:hivaa.im$
+    exclusive: true
+  - regex: ^@whatsappbot:hivaa.im$
+    exclusive: true
+
+

@@ -1,4 +1,4 @@
-version: '3.5'
+#version: '3.5'
 
 services:
     # Frontend
@@ -184,11 +184,11 @@ services:
     prosody:
         image: jitsi/prosody:${JITSI_IMAGE_VERSION:-stable-9457-2}
         restart: ${RESTART_POLICY:-unless-stopped}
-        expose:
+        ports:
             - '${XMPP_PORT:-5222}'
             - '${PROSODY_S2S_PORT:-5269}'
             - '5347'
-            - '${PROSODY_HTTP_PORT:-5280}'
+            - '${PROSODY_HTTP_PORT:-5280}:${PROSODY_HTTP_PORT:-5280}'
         volumes:
             - ${CONFIG}/prosody/config:/config:Z
             - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
