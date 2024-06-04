@@ -12,6 +12,7 @@ services:
       - ./insa/default.conf:/etc/nginx/default
       - ./insa/conf:/etc/nginx/sites-enabled
       - ./insa/nginx.conf:/etc/nginx/nginx.conf
+      - ./insa/jitsi:/etc/jitsi
     network_mode: host
     environment:
       - NGINX_WORKER_PROCESSES
