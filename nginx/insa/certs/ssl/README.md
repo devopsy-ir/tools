@@ -10,4 +10,8 @@ openssl x509 -req -extfile <(printf "subjectAltName=DNS:insa.lr,DNS:www.insa.lr"
 [Remote machine]
 sudo scp root@192.168.122.117:/root/tools/nginx/insa/certs/ssl/insa.lr/ca.crt ./ca-self-signed-openssl.crt
 
-sudo cat ca-self-signed-openssl.crt >> ca-certificates.crt 
+sudo cat ca-self-signed-openssl.crt >> /etc/ssl/certs/ca-certificates.crt
+
+sudo update-ca-certificates --fresh
+
+sudo docker login docker.insa.lr
