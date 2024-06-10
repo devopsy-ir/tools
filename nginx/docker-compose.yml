@@ -8,11 +8,11 @@ services:
       - ./modules:/usr/lib/nginx/modules:ro
       - ./volumes/html:/usr/share/nginx/html:ro
       - ./volumes/html:/etc/nginx/html:ro
-      - ./insa/certs:/var/www/certs
-      - ./insa/default.conf:/etc/nginx/default
-      - ./insa/conf:/etc/nginx/sites-enabled
-      - ./insa/nginx.conf:/etc/nginx/nginx.conf
-      - ./insa/jitsi:/etc/jitsi
+      - ./conf/certs:/var/www/certs
+      - ./conf/default.conf:/etc/nginx/default
+      - ./conf/conf:/etc/nginx/sites-enabled
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/jitsi:/etc/jitsi
     network_mode: host
     environment:
       - NGINX_WORKER_PROCESSES
