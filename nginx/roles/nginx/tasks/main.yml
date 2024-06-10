@@ -1,49 +1,24 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Copy .env
+- name: Copy compose file
   become: true
   tags:
-    - copy_plan
+    - copy_compose
   template:
-    src: "env.j2"
-    dest: "{{ app_update_api_path }}/.env"
+    src: "docker-compose.yml"
+    dest: "{{ tools_dir }}/nginx/docker-compose.yml"
     owner: root
     group: root
     mode: 0644
 
-- name: GIT pull
+- name: copy nginx conf dir
   become: true
-  tags:
-    - git_pull
-  git:
-    repo: "https://{{ gituser | urlencode }}:{{ gitpassword | urlencode }}@git.nilvaos.ir/scm/devops/infra.git"
-    dest: "/root/infra"
-    update: yes
-    clone: yes
-    version: master
-
-- name: Copy CHANGES
-  become: true
-  tags:
-    - copy_changes
   template:
-    src: "CHANGES.rtl.md"
-    dest: "{{ app_update_api_path }}/CHANGES.rtl.md"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: docker compose build api
-  command: 'docker-compose build api'
+    src: "{{ item }}"
+    dest: {{ tools_dir }}/nginx/conf/conf/{{ item | basename | regex_replace('\\.j2$', '') }}
+  with_fileglob:
+    - ../templates/conf/conf/*.j2
+- name: create self signed ssl certs
+  command: 'openssl genrsa -out ca.key 2048 && openssl req -new -x509 -days 365 -key ca.key -subj "/C=CN/ST=GD/L=SZ/O=Acme, Inc./CN=Acme Root CA" -out ca.crt && openssl req -newkey rsa:2048 -nodes -keyout priv.key -subj "/C=CN/ST=GD/L=SZ/O=Acme, Inc./CN=*.{{ domain }}" -out cert.crt && openssl x509 -req -extfile <(printf "subjectAltName=DNS:{{ domain }},DNS:www.{{ domain }}") -days 365 -in cert.crt -CA ca.crt -CAkey ca.key -CAcreateserial -out cert.crt'
   args:
-    chdir: "{{ app_update_api_path }}"
-
-- name: docker compose down api
-  command: 'docker-compose down'
-  args:
-    chdir: "{{ app_update_api_path }}"
-
-- name: docker compose up api
-  command: 'docker-compose up -d'
-  args:
-    chdir: "{{ app_update_api_path }}"
+    chdir: "{{ tools_dir }}/nginx/conf/certs/ssl/domain"

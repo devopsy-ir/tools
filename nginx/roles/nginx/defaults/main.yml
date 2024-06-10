@@ -2,7 +2,4 @@
 # Python interpreter
 ansible_python_interpreter: /usr/bin/python3
 
-# version of new apk
-APP_VERSION: 1.7.6
-
-APP_FORCE_UPDATE_VERSION: ""
+tools_dir: /root/ghadir/tools
