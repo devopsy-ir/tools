@@ -13,8 +13,8 @@ server {
 #        include /etc/nginx/vhost.d/default443;
         server_name repo.insa.lr;
         listen 443 ssl http2 ;
-        ssl_certificate /var/www/certs/ssl/insa.lr/cert.crt;
-        ssl_certificate_key /var/www/certs/ssl/insa.lr/priv.key;
+        ssl_certificate /var/www/certs/ssl/domain/cert.crt;
+        ssl_certificate_key /var/www/certs/ssl/domain/priv.key;
         include snippets/ssl-params.conf;
 #        ssl_dhparam /var/www/certs/old/ssl-dhparams.pem;
         location / {
@@ -44,8 +44,8 @@ server {
 #        include /etc/nginx/vhost.d/default443;
         server_name docker.insa.lr;
         listen 443 ssl http2 ;
-        ssl_certificate /var/www/certs/ssl/insa.lr/cert.crt;
-        ssl_certificate_key /var/www/certs/ssl/insa.lr/priv.key;
+        ssl_certificate /var/www/certs/ssl/domain/cert.crt;
+        ssl_certificate_key /var/www/certs/ssl/domain/priv.key;
         include snippets/ssl-params.conf;
 #        ssl_dhparam /var/www/certs/old/ssl-dhparams.pem;
         location / {

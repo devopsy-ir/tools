@@ -21,8 +21,8 @@ server {
 
     server_name matrix.insa.lr;
 
-    ssl_certificate /var/www/certs/ssl/insa.lr/cert.crt;
-    ssl_certificate_key /var/www/certs/ssl/insa.lr/priv.key;
+    ssl_certificate /var/www/certs/ssl/domain/cert.crt;
+    ssl_certificate_key /var/www/certs/ssl/domain/priv.key;
 
         client_max_body_size 1g;
         
