@@ -1,0 +1,13 @@
+services:
+  web:
+    image: vectorim/element-web:v1.11.68
+    restart: unless-stopped
+    volumes:
+      - ./element-config.json:/app/config.json
+    ports:
+      - 2015:80
+  admin:
+       image: docker.insa.lr/awesometechnologies/synapse-admin:0.10.1
+       restart: always
+       ports:
+         - 127.0.0.1:2003:80

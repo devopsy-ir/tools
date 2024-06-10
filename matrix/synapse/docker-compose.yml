@@ -1,6 +1,9 @@
 services:
   synapse:
     tty: true
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: always
     image: docker.insa.lr/matrixdotorg/synapse:v1.98.0
     volumes:
@@ -16,7 +19,8 @@ services:
          /start.py
 
   postgres:
-    image: 'docker.insa.lr/postgres:16.3-alpine3.20'
+#    image: 'docker.insa.lr/postgres:16.3-alpine3.20'
+    image: docker.insa.lr/postgres:14-alpine3.20
     restart: always
     volumes:
         - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
@@ -27,3 +31,9 @@ services:
       POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
     ports:
       - "${POSTGRES_PORT}:5432"
+    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -d `cat $$POSTGRES_DB_FILE` -U `cat $$PGUSER_FILE`" ]
+      test: "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+      interval: 2s
+      timeout: 5s
+      retries: 10
