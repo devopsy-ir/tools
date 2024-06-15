@@ -18,7 +18,4 @@ services:
       - NGINX_WORKER_PROCESSES
       - NGINX_WORKER_CONNECTIONS
     extra_hosts:
-      - "devopsy.lr:192.168.122.117"
-      - "up.devopsy.lr:192.168.122.117"
-      - "metrics.devopsy.lr:192.168.122.117"
-      - "monitor.devopsy.lr:192.168.122.117"
+      - "domain.ir:192.168.12.117"
