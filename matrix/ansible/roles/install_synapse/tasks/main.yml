@@ -1,49 +1,32 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Copy .env
+- name: Copy synapse env
   become: true
   tags:
-    - copy_plan
+    - copy_synapse_env
   template:
-    src: "env.j2"
-    dest: "{{ app_update_api_path }}/.env"
+    src: "env.synapse.j2"
+    dest: "{{ tools_path }}/matrix/synapse/.env"
     owner: root
     group: root
     mode: 0644
 
-- name: GIT pull
-  become: true
-  tags:
-    - git_pull
-  git:
-    repo: "https://{{ gituser | urlencode }}:{{ gitpassword | urlencode }}@git.nilvaos.ir/scm/devops/infra.git"
-    dest: "/root/infra"
-    update: yes
-    clone: yes
-    version: master
-
-- name: Copy CHANGES
-  become: true
-  tags:
-    - copy_changes
-  template:
-    src: "CHANGES.rtl.md"
-    dest: "{{ app_update_api_path }}/CHANGES.rtl.md"
-    owner: root
-    group: root
-    mode: 0644
-
-- name: docker compose build api
-  command: 'docker-compose build api'
+- name: docker pull synapse
+  command: "docker pull docker.{{ domain }}/matrixdotorg/synapse:{{ SYNAPSE_VERSION }}"
   args:
-    chdir: "{{ app_update_api_path }}"
+    chdir: "{{ tools_path }}"
+
+- name: generate synapse config
+  command: "docker run -it --rm --mount type=volume,src=infra_synapse_data,dst=/data -e SYNAPSE_SERVER_NAME={{ domain }} -e SYNAPSE_REPORT_STATS=no docker.{{ domain }}/matrixdotorg/synapse:{{ SYNAPSE_VERSION }} generate"
+  args:
+    chdir: "{{ tools_path }}"
 
 - name: docker compose down api
-  command: 'docker-compose down'
+  command: 'docker compose down'
   args:
-    chdir: "{{ app_update_api_path }}"
+    chdir: "{{ tools_path }}/matrix/synapse"
 
 - name: docker compose up api
-  command: 'docker-compose up -d'
+  command: 'docker compose up -d'
   args:
-    chdir: "{{ app_update_api_path }}"
+    chdir: "{{ tools_path }}/matrix/synapse"

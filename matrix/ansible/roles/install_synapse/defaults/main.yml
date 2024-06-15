@@ -2,7 +2,19 @@
 # Python interpreter
 ansible_python_interpreter: /usr/bin/python3
 
-# version of new apk
-APP_VERSION: 1.7.6
+SYNAPSE_VERSION: v1.98.0
 
-APP_FORCE_UPDATE_VERSION: ""
+POSTGRES_VERSION: 14-alpine3.20
+
+POSTGRES_PASSWORD: P@$$WORD
+
+POSTGRES_USER: synapse
+
+SYNAPSE_ADMIN: admin
+
+SYNAPSE_ADMIN_PASSWORD: admin
+
+# Total env
+domain: ghasedak.ir
+
+tools_path: /root/tools
