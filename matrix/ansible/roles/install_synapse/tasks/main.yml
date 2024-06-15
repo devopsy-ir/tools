@@ -21,12 +21,48 @@
   args:
     chdir: "{{ tools_path }}"
 
+- name: Copy synapse docker compose yaml
+  become: true
+  tags:
+    - copy_synapse_docker_compose
+  template:
+    src: "docker-compose.synapse.yml.j2"
+    dest: "{{ tools_path }}/matrix/synapse/docker-compose.yml"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: docker compose down api
   command: 'docker compose down'
   args:
     chdir: "{{ tools_path }}/matrix/synapse"
 
+- name: move synapse homeserver
+  command: mv /var/lib/docker/volumes/infra_synapse_data/_data/homeserver.yaml {{ tools_path }}/matrix/synapse/data/homeserver.yaml
+  args:
+    creates: {{ tools_path }}/matrix/synapse/data/homeserver.yaml
+
+- name: move synapse log config
+  command: mv /var/lib/docker/volumes/infra_synapse_data/_data/{{ domain }}.log.config {{ tools_path }}/matrix/synapse/data/{{ domain }}.log.config
+  args:
+    creates: {{ tools_path }}/matrix/synapse/data/{{ domain }}.log.config
+
+- name: move synapse signing key
+  command: mv /var/lib/docker/volumes/infra_synapse_data/_data/{{ domain }}.signing.key {{ tools_path }}/matrix/synapse/data/{{ domain }}.signing.key
+  args:
+    creates: {{ tools_path }}/matrix/synapse/data/{{ domain }}.signing.key
+
+- name: modify homeserver database
+  command: sed 's/name: sqlite3/name: psycopg2/g' data/homeserver.yaml && sed 's#database: /data/homeserver.db#database: synapse#g' data/homeserver.yaml
+  args:
+    chdir: "{{ tools_path }}/matrix/synapse"
+
 - name: docker compose up api
   command: 'docker compose up -d'
+  args:
+    chdir: "{{ tools_path }}/matrix/synapse"
+
+- name: create synapse admin
+  command: "docker compose exec synapse register_new_matrix_user -u {{ SYNAPSE_ADMIN }} -p {{ SYNAPSE_ADMIN_PASSWORD }} -a -c /data/homeserver.yaml http://localhost:8008"
   args:
     chdir: "{{ tools_path }}/matrix/synapse"
