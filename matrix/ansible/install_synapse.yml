@@ -1,11 +1,4 @@
 ---
 - hosts: insa_synapse
-  vars_prompt:
-    - name: "gituser"
-      prompt: "Enter your git username" 
-      private: no
-    - name: "gitpassword"
-      prompt: "Enter your git password" 
-      private: yes
   roles:
     - { role: '{{playbook_dir}}/roles/install_synapse'}
