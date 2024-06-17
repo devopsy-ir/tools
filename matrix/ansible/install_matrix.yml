@@ -1,5 +1,0 @@
----
-- hosts: insa_synapse
-  roles:
-    - { role: '{{playbook_dir}}/roles/install_synapse'}
-    - { role: '{{playbook_dir}}/roles/install_web'}
