@@ -33,22 +33,35 @@
     group: root
     mode: 0644
 
-- name: Copy
+- name: Copy dir vhost.d
+  copy:
+    src: vhost.d    # note the '/' <-- !!!
+    dest: {{ tools_dir }}/nginx/
 
-- name: Copy nginx jitsi dir
-  become: true
-  tags:
-    - copy_nginx_jitsi_dir
-  template:
-    src
+- name: Copy dir modules
+  copy:
+    src: modules
+    dest: {{ tools_dir }}/nginx/
 
-- name: Template complete tree of jitsi dir
-  template:
-    src: '{{ item.src }}'
-    dest: {{ tools_dir }}/nginx/conf/jitsi/{{ item.path }}
-    force: yes
-  with_filetree: jitsi/
-  when: item.state == 'file'
+- name: Copy dir snippets
+  copy:
+    src: snippets
+    dest: {{ tools_dir }}/nginx/
+
+#- name: Copy nginx jitsi dir
+#  become: true
+#  tags:
+#    - copy_nginx_jitsi_dir
+#  template:
+#    src
+
+#- name: Template complete tree of jitsi dir
+#  template:
+#    src: '{{ item.src }}'
+#    dest: {{ tools_dir }}/nginx/conf/jitsi/{{ item.path }}
+#    force: yes
+#  with_filetree: jitsi/
+#  when: item.state == 'file'
 
 - name: copy nginx conf dir
   become: true
