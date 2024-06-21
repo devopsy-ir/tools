@@ -17,7 +17,7 @@ the role like so:
 
 ```yaml
 ---
-- hosts: insa_synapse
+- hosts: synapse
   roles:
     - { role: '{{playbook_dir}}/roles/install_synapse'}
 ```
@@ -32,4 +32,4 @@ Author Information
 
 Created by Mohsen Abbasi.
 
-Don't hesitate create [an Issue](https://github.com/devopsy-ir/devops-tools/issues) if you have any bugs or suggestions.
+Don't hesitate create [an Issue](https://github.com/devopsy-ir/tools/issues) if you have any bugs or suggestions.
