@@ -1,11 +1,16 @@
 tools_dir=$1
-echo ${tools_dir}
+domain=$2
+
 #apt update
 #apt -y install rsync
-mkdir ${tools_dir}/nexus
-echo "Copy Nexus docker images ..."
-rsync  -qazhPW --inplace  --progress ./nexus/volumes ${tools_dir}/nexus/
 
-echo "Up Nexus ..."
-cd ./nexus/ansible/
-ansible-playbook -i hosts.yml nexus.yml
+mkdir -p ${tools_dir}/nexus
+
+sed -i -E "s/domain:.*/domain: ${domain}/g" ./nexus/ansible/hosts.yml
+
+#echo "Copy Nexus docker images ..."
+#rsync  -qazhPW --inplace  --progress ./nexus/volumes ${tools_dir}/nexus/
+
+#echo "Up Nexus ..."
+#cd ./nexus/ansible/
+#ansible-playbook -i hosts.yml nexus.yml
