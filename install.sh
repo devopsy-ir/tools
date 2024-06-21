@@ -6,7 +6,7 @@ domain=$2
 
 mkdir -p ${tools_dir}/nexus
 
-sed -i -E "s/domain:.*/domain: ${domain}/g" ./nexus/ansible/hosts.yml
+sed -i -E "s/domain:.*/domain: ${domain}/g" ./nginx/ansible/hosts.yml
 
 #echo "Copy Nexus docker images ..."
 #rsync  -qazhPW --inplace  --progress ./nexus/volumes ${tools_dir}/nexus/
